@@ -55,3 +55,25 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+
+class FitnessClass(models.Model): 
+    name = models.CharField(max_length=100) 
+    date_time = models.DateTimeField() 
+    instructor = models.CharField(max_length=100) 
+    total_slots = models.IntegerField() 
+    available_slots = models.IntegerField() 
+    
+    def __str__(self): 
+        return f"{self.name} - {self.instructor} on {self.date_time.strftime('%Y-%m-%d %H:%M')}" 
+    
+class Booking(models.Model): 
+    fitness_class = models.ForeignKey(FitnessClass, on_delete=models.CASCADE, related_name='bookings') 
+    client_name = models.CharField(max_length=100) 
+    client_email = models.EmailField() 
+    booking_time = models.DateTimeField(auto_now_add=True) 
+    
+    class Meta: 
+        unique_together = ('fitness_class', 'client_email') 
+
+    def __str__(self): 
+        return f"Booking for {self.client_name} in {self.fitness_class.name}"
