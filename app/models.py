@@ -83,6 +83,9 @@ class Booking(models.Model):
     
     class Meta: 
         unique_together = ('fitness_class', 'client_email') 
+        indexes = [
+            models.Index(fields=['client_email'], name='booking_client_email_idx'),
+        ] 
 
     def __str__(self): 
         return f"Booking for {self.client_name} in {self.fitness_class.name}"
