@@ -43,9 +43,13 @@ class LogoutView(APIView):
 
 # GET / classes
 class FitnessClassListView(generics.ListAPIView):
-    queryset = FitnessClass.objects.filter(date_time__gte=timezone.now()).order_by('date_time')
+    # queryset = FitnessClass.objects.filter(date_time__gte=timezone.now()).order_by('date_time')
     serializer_class = FitnessClassSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        # print(timezone.now())
+        return FitnessClass.objects.filter(date_time__gte=timezone.now()).order_by('date_time')
 
 
 # POST /book
@@ -67,6 +71,14 @@ class BookingCreateView(generics.CreateAPIView):
         
         if fitness_class.available_slots <= 0:
             return Response({'error': 'No available slots.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        # fitness_class.available_slots -= 1
+        # fitness_class.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
 
 
 # GET /bookings

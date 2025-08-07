@@ -41,6 +41,13 @@ class FitnessClassSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'date_time', 'instructor', 'total_slots', 'available_slots']
 
 class BookingSerializer(serializers.ModelSerializer):
+    # fitness_class = serializers.SlugRelatedField(
+    #     # source='fitness_class',
+    #     slug_field='name',
+    #     read_only=True
+    # )
+
+    fitness_class = FitnessClassSerializer(read_only=True)
     class Meta:
         model = Booking
         fields = ['id', 'fitness_class', 'client_name', 'client_email', 'booking_time']
