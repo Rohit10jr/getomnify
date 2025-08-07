@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from .models import FitnessClass, Booking
+from zoneinfo import ZoneInfo
+import pytz
 
 User = get_user_model()
 
@@ -34,11 +36,27 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
     
 
-
 class FitnessClassSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = FitnessClass
         fields = ['id', 'name', 'date_time', 'instructor', 'total_slots', 'available_slots']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        user_timezone = self.context['request'].query_params.get('timezone', 'Asia/Kolkata')
+
+        try:
+            target_tz = ZoneInfo(user_timezone)
+            utc_datetime = instance.date_time
+            representation['date_time'] = utc_datetime.astimezone(target_tz).isoformat()
+        except KeyError:
+            ist_tz = ZoneInfo('Asia/Kolkata')
+            utc_datetime = instance.date_time
+            representation['date_time'] = utc_datetime.astimezone(ist_tz).isoformat()
+            
+        return representation
+
 
 class BookingSerializer(serializers.ModelSerializer):
     # fitness_class = serializers.SlugRelatedField(
@@ -52,5 +70,7 @@ class BookingSerializer(serializers.ModelSerializer):
         model = Booking
         fields = ['id', 'fitness_class', 'client_name', 'client_email', 'booking_time']
         read_only_fields = ['booking_time']
+
+
 
 
