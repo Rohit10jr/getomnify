@@ -1,6 +1,6 @@
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
-from .models import CustomUser
+from .models import CustomUser, FitnessClass, Booking
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -21,3 +21,16 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ('email', 'firstname', 'lastname')
     ordering = ('email',)
+
+@admin.register(FitnessClass)
+class FitnessClassAdmin(admin.ModelAdmin):
+    list_display = ('name', 'date_time', 'instructor', 'total_slots', 'available_slots')
+    list_filter = ('instructor', 'date_time')
+    search_fields = ('name', 'instructor')
+
+@admin.register(Booking)
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ('fitness_class', 'client_name', 'client_email', 'booking_time')
+    list_filter = ('fitness_class', 'booking_time')
+    search_fields = ('client_name', 'client_email')
+

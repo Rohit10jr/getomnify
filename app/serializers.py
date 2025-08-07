@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+from .models import FitnessClass, Booking
 
 User = get_user_model()
 
@@ -20,8 +21,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'name', 'password', 'password2')
-        # fields = ('email', 'firstname', 'lastname', 'password', 'password2')
+        fields = ('email', 'firstname', 'lastname', 'password', 'password2')
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -33,3 +33,17 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
     
+
+
+class FitnessClassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FitnessClass
+        fields = ['id', 'name', 'date_time', 'instructor', 'total_slots', 'available_slots']
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = ['id', 'fitness_class', 'client_name', 'client_email', 'booking_time']
+        read_only_fields = ['booking_time']
+
+
