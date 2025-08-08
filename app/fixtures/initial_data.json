@@ -1,0 +1,201 @@
+[
+{
+  "model": "app.fitnessclass",
+  "pk": 1,
+  "fields": {
+    "name": "Yoga & Meditation",
+    "date_time": "2025-08-09T19:35:02Z",
+    "instructor": "sadhguru",
+    "total_slots": 20,
+    "available_slots": 15
+  }
+},
+{
+  "model": "app.fitnessclass",
+  "pk": 2,
+  "fields": {
+    "name": "Zumba",
+    "date_time": "2025-08-18T10:00:00Z",
+    "instructor": "rashmika",
+    "total_slots": 5,
+    "available_slots": 2
+  }
+},
+{
+  "model": "app.fitnessclass",
+  "pk": 3,
+  "fields": {
+    "name": "HIIT",
+    "date_time": "2025-08-12T18:00:00Z",
+    "instructor": "vriat",
+    "total_slots": 10,
+    "available_slots": 6
+  }
+},
+{
+  "model": "app.fitnessclass",
+  "pk": 5,
+  "fields": {
+    "name": "cricket",
+    "date_time": "2025-08-11T06:00:00Z",
+    "instructor": "dhoni",
+    "total_slots": 15,
+    "available_slots": 5
+  }
+},
+{
+  "model": "app.fitnessclass",
+  "pk": 6,
+  "fields": {
+    "name": "Aerobics",
+    "date_time": "2025-08-13T06:00:00Z",
+    "instructor": "Priya",
+    "total_slots": 20,
+    "available_slots": 9
+  }
+},
+{
+  "model": "app.fitnessclass",
+  "pk": 7,
+  "fields": {
+    "name": "Powerlifting",
+    "date_time": "2025-08-14T06:00:00Z",
+    "instructor": "john cena",
+    "total_slots": 10,
+    "available_slots": 7
+  }
+},
+{
+  "model": "app.fitnessclass",
+  "pk": 8,
+  "fields": {
+    "name": "Boxing Cardio",
+    "date_time": "2025-08-13T12:00:00Z",
+    "instructor": "M Ali",
+    "total_slots": 50,
+    "available_slots": 5
+  }
+},
+{
+  "model": "app.fitnessclass",
+  "pk": 9,
+  "fields": {
+    "name": "Football",
+    "date_time": "2025-08-14T06:00:00Z",
+    "instructor": "Messi",
+    "total_slots": 10,
+    "available_slots": 1
+  }
+},
+{
+  "model": "app.fitnessclass",
+  "pk": 10,
+  "fields": {
+    "name": "Badminton",
+    "date_time": "2025-08-11T12:00:00Z",
+    "instructor": "Lin dan",
+    "total_slots": 10,
+    "available_slots": 2
+  }
+},
+{
+  "model": "app.booking",
+  "pk": 21,
+  "fields": {
+    "fitness_class": 1,
+    "client_name": "arun",
+    "client_email": "arun@mail.com",
+    "booking_time": "2025-08-08T04:10:12.226Z"
+  }
+},
+{
+  "model": "app.booking",
+  "pk": 22,
+  "fields": {
+    "fitness_class": 2,
+    "client_name": "arun",
+    "client_email": "arun@mail.com",
+    "booking_time": "2025-08-08T04:11:19.352Z"
+  }
+},
+{
+  "model": "app.booking",
+  "pk": 24,
+  "fields": {
+    "fitness_class": 3,
+    "client_name": "john",
+    "client_email": "john@mail.com",
+    "booking_time": "2025-08-08T04:50:18.248Z"
+  }
+},
+{
+  "model": "app.booking",
+  "pk": 33,
+  "fields": {
+    "fitness_class": 5,
+    "client_name": "rohit",
+    "client_email": "rohit@mail.com",
+    "booking_time": "2025-08-08T08:30:56.576Z"
+  }
+},
+{
+  "model": "app.booking",
+  "pk": 34,
+  "fields": {
+    "fitness_class": 8,
+    "client_name": "rohit",
+    "client_email": "rohit@mail.com",
+    "booking_time": "2025-08-08T09:45:36.663Z"
+  }
+},
+{
+  "model": "app.booking",
+  "pk": 35,
+  "fields": {
+    "fitness_class": 10,
+    "client_name": "roshan",
+    "client_email": "ros@mail.com",
+    "booking_time": "2025-08-08T09:45:56.673Z"
+  }
+},
+{
+  "model": "app.booking",
+  "pk": 36,
+  "fields": {
+    "fitness_class": 7,
+    "client_name": "ronny",
+    "client_email": "ron@mail.com",
+    "booking_time": "2025-08-08T09:46:10.625Z"
+  }
+},
+{
+  "model": "app.booking",
+  "pk": 37,
+  "fields": {
+    "fitness_class": 9,
+    "client_name": "rohit",
+    "client_email": "rohit@mail.com",
+    "booking_time": "2025-08-08T09:46:28.957Z"
+  }
+},
+{
+  "model": "app.booking",
+  "pk": 38,
+  "fields": {
+    "fitness_class": 6,
+    "client_name": "kavya",
+    "client_email": "kavya@mail.com",
+    "booking_time": "2025-08-08T09:46:49.660Z"
+  }
+},
+{
+  "model": "app.booking",
+  "pk": 39,
+  "fields": {
+    "fitness_class": 3,
+    "client_name": "joshua",
+    "client_email": "josh@mail.com",
+    "booking_time": "2025-08-08T09:47:07.828Z"
+  }
+}
+]

@@ -60,8 +60,8 @@ class FitnessClass(models.Model):
     name = models.CharField(max_length=100) 
     date_time = models.DateTimeField() 
     instructor = models.CharField(max_length=100) 
-    total_slots = models.IntegerField() 
-    available_slots = models.IntegerField() 
+    total_slots = models.PositiveIntegerField() 
+    available_slots = models.PositiveIntegerField() 
     
     def __str__(self): 
         return f"{self.id}. {self.name} - {self.instructor} on {self.date_time.strftime('%Y-%m-%d %H:%M')}"
@@ -82,7 +82,6 @@ class Booking(models.Model):
     booking_time = models.DateTimeField(auto_now_add=True) 
     
     class Meta: 
-        # unique_together = ('fitness_class', 'client_email') 
         indexes = [
             models.Index(fields=['client_email'], name='booking_client_email_idx'),
         ] 
@@ -97,7 +96,6 @@ class Booking(models.Model):
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        # Increment available slots when a booking is deleted
         self.fitness_class.available_slots += 1
         self.fitness_class.save()
         super().delete(*args, **kwargs)

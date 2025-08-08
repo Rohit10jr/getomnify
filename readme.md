@@ -66,7 +66,15 @@ Apply the database migrations to create the necessary tables:
 python manage.py migrate
 ```
 
-### 6. Create a Superuser (Admin Account)
+### 6. Load initial data:
+
+To populate the database with sample fitness classes and bookings for testing, run the following command. This will provide you with pre-existing data to interact with the API endpoints.
+
+```bash
+python manage.py loaddata initial_data.json
+```
+
+### 7. Create a Superuser (Admin Account)
 
 To access the Django admin panel, you'll need to create a superuser:
 
@@ -84,6 +92,20 @@ python manage.py runserver
 ```
 
 The application will be accessible at `http://127.0.0.1:8000/`.
+
+## Running Tests
+
+The project includes basic unit tests to ensure the core functionality works as expected. You can run all tests from the root directory with the following command:
+
+
+```bash
+python manage.py test
+```
+To run tests for a specific app , you can specify the app name.
+
+```bash
+python manage.py test app
+```
 
 ## API Endpoints
 
