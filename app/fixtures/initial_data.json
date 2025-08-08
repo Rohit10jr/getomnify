@@ -1,5 +1,22 @@
 [
 {
+  "model": "app.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$n6zI5sbTJ2MlPAU8mLac9E$LwkyMd1CwQAW/KFgdIeyq2fW3jtsDaaZmIgm8xPfaO4=",
+    "last_login": null,
+    "is_superuser": true,
+    "email": "rohit@mail.com",
+    "firstname": "rohit",
+    "lastname": "j",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-08-08T09:51:40.739Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
   "model": "app.fitnessclass",
   "pk": 1,
   "fields": {
@@ -73,7 +90,7 @@
     "date_time": "2025-08-13T12:00:00Z",
     "instructor": "M Ali",
     "total_slots": 50,
-    "available_slots": -1
+    "available_slots": 5
   }
 },
 {
