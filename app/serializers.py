@@ -4,7 +4,6 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from .models import FitnessClass, Booking
 from zoneinfo import ZoneInfo
-import pytz
 
 User = get_user_model()
 
@@ -59,12 +58,6 @@ class FitnessClassSerializer(serializers.ModelSerializer):
 
 
 class BookingCreateSerializer(serializers.ModelSerializer):
-    # fitness_class = serializers.SlugRelatedField(
-    #     # source='fitness_class',
-    #     slug_field='name',
-    #     read_only=True
-    # )
-
     class_id = serializers.PrimaryKeyRelatedField(
         queryset=FitnessClass.objects.all(),
         source='fitness_class' 

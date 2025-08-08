@@ -82,7 +82,6 @@ class Booking(models.Model):
     booking_time = models.DateTimeField(auto_now_add=True) 
     
     class Meta: 
-        # unique_together = ('fitness_class', 'client_email') 
         indexes = [
             models.Index(fields=['client_email'], name='booking_client_email_idx'),
         ] 
@@ -97,7 +96,6 @@ class Booking(models.Model):
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        # Increment available slots when a booking is deleted
         self.fitness_class.available_slots += 1
         self.fitness_class.save()
         super().delete(*args, **kwargs)
