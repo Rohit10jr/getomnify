@@ -85,6 +85,20 @@ python manage.py runserver
 
 The application will be accessible at `http://127.0.0.1:8000/`.
 
+## Running Tests
+
+The project includes basic unit tests to ensure the core functionality works as expected. You can run all tests from the root directory with the following command:
+
+
+```bash
+python manage.py test
+```
+To run tests for a specific app , you can specify the app name.
+
+```bash
+python manage.py test app
+```
+
 ## API Endpoints
 
 The API endpoints are prefixed with `/api/`.
