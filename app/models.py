@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
+from django.core.exceptions import ValidationError
 
 class CustomUserManager(BaseUserManager):
     """
@@ -64,8 +64,17 @@ class FitnessClass(models.Model):
     available_slots = models.IntegerField() 
     
     def __str__(self): 
-        return f"{self.name} - {self.instructor} on {self.date_time.strftime('%Y-%m-%d %H:%M')}" 
-    
+        return f"{self.id}. {self.name} - {self.instructor} on {self.date_time.strftime('%Y-%m-%d %H:%M')}"
+
+    def clean(self):
+        if self.available_slots > self.total_slots:
+            raise ValidationError("Available slots cannot be greater than total slots.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+
 class Booking(models.Model): 
     fitness_class = models.ForeignKey(FitnessClass, on_delete=models.CASCADE, related_name='bookings') 
     client_name = models.CharField(max_length=100) 
@@ -73,7 +82,22 @@ class Booking(models.Model):
     booking_time = models.DateTimeField(auto_now_add=True) 
     
     class Meta: 
-        unique_together = ('fitness_class', 'client_email') 
+        # unique_together = ('fitness_class', 'client_email') 
+        indexes = [
+            models.Index(fields=['client_email'], name='booking_client_email_idx'),
+        ] 
 
     def __str__(self): 
         return f"Booking for {self.client_name} in {self.fitness_class.name}"
+
+    def save(self, *args, **kwargs):
+        if self._state.adding:
+            self.fitness_class.available_slots -= 1
+            self.fitness_class.save()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Increment available slots when a booking is deleted
+        self.fitness_class.available_slots += 1
+        self.fitness_class.save()
+        super().delete(*args, **kwargs)
