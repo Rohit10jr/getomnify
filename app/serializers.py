@@ -58,19 +58,32 @@ class FitnessClassSerializer(serializers.ModelSerializer):
         return representation
 
 
-class BookingSerializer(serializers.ModelSerializer):
+class BookingCreateSerializer(serializers.ModelSerializer):
     # fitness_class = serializers.SlugRelatedField(
     #     # source='fitness_class',
     #     slug_field='name',
     #     read_only=True
     # )
 
+    class_id = serializers.PrimaryKeyRelatedField(
+        queryset=FitnessClass.objects.all(),
+        source='fitness_class' 
+    )
+
+    class Meta:
+        model = Booking
+        fields = ['class_id', 'client_name', 'client_email']
+    
+    def validate(self, data):
+        if Booking.objects.filter(fitness_class=data['fitness_class'], client_email=data['client_email']).exists():
+            raise serializers.ValidationError("You have already booked this class.")
+        return data
+
+
+class BookingListSerializer(serializers.ModelSerializer):
     fitness_class = FitnessClassSerializer(read_only=True)
+
     class Meta:
         model = Booking
         fields = ['id', 'fitness_class', 'client_name', 'client_email', 'booking_time']
         read_only_fields = ['booking_time']
-
-
-
-

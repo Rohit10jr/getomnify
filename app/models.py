@@ -64,7 +64,7 @@ class FitnessClass(models.Model):
     available_slots = models.IntegerField() 
     
     def __str__(self): 
-        return f"{self.name} - {self.instructor} on {self.date_time.strftime('%Y-%m-%d %H:%M')}"
+        return f"{self.id}. {self.name} - {self.instructor} on {self.date_time.strftime('%Y-%m-%d %H:%M')}"
 
     def clean(self):
         if self.available_slots > self.total_slots:
@@ -82,7 +82,7 @@ class Booking(models.Model):
     booking_time = models.DateTimeField(auto_now_add=True) 
     
     class Meta: 
-        unique_together = ('fitness_class', 'client_email') 
+        # unique_together = ('fitness_class', 'client_email') 
         indexes = [
             models.Index(fields=['client_email'], name='booking_client_email_idx'),
         ] 

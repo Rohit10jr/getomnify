@@ -5,7 +5,7 @@ from rest_framework import generics, status, permissions
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import RegisterSerializer, FitnessClassSerializer, BookingSerializer
+from .serializers import RegisterSerializer, FitnessClassSerializer, BookingCreateSerializer, BookingListSerializer
 from django.contrib.auth import get_user_model
 from .models import FitnessClass, Booking
 from django.db import transaction
@@ -57,19 +57,17 @@ class BookingCreateView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        serializer = BookingSerializer(data=request.data)
+        serializer = BookingCreateSerializer(data=request.data)
         if serializer.is_valid():
-            fitness_class_id = serializer.validated_data['fitness_class'].id
-            client_email = serializer.validated_data['client_email']
+            # class_id = request.data.get('class_id')
+            fitness_class_obj = serializer.validated_data['fitness_class']
 
             with transaction.atomic():
-                fitness_class = FitnessClass.objects.select_for_update().get(id=fitness_class_id)
+                # fitness_class = FitnessClass.objects.select_for_update().get(id=class_id)
+                fitness_class = FitnessClass.objects.select_for_update().get(pk=fitness_class_obj.pk)
 
                 if fitness_class.available_slots > 0:
-                    # Check if the client has already booked this class
-                    if Booking.objects.filter(fitness_class=fitness_class, client_email=client_email).exists():
-                        return Response({"detail": "You have already booked this class."}, status=status.HTTP_409_CONFLICT)
-
+                    print("inside if fitness_class.available_slots > 0")
                     serializer.save(fitness_class=fitness_class)
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
                 else:
@@ -77,34 +75,9 @@ class BookingCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class BookingCreateView(generics.CreateAPIView):
-#     serializer_class = BookingSerializer
-#     permission_classes = [AllowAny]
-
-#     def create(self, request,*args, **kwargs):
-#         class_id = request.data.get('fitness_class')
-#         client_email = request.data.get('client_email')
-
-#         try: 
-#             fitness_class = FitnessClass.objects.get(id=class_id)
-#         except FitnessClass.DoesNotExist:
-#             return Response({'error': 'Fitness class not found'}, status=status.HTTP_404_NOT_FOUND)
-
-#         if Booking.objects.filter(fitness_class=fitness_class, client_email=client_email).exists():
-#             return Response({'error':'you have already booked this class'}, status=status.HTTP_400_BAD_REQUEST)
-        
-#         if fitness_class.available_slots <= 0:
-#             return Response({'error': 'No available slots.'}, status=status.HTTP_400_BAD_REQUEST)
-
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         self.perform_create(serializer)
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-
 # GET /bookings
 class BookingListView(generics.ListAPIView):
-    serializer_class = BookingSerializer
+    serializer_class = BookingListSerializer
     permission_classes = [AllowAny] 
 
     def get_queryset(self):
