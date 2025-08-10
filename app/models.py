@@ -4,10 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.core.exceptions import ValidationError
 
 class CustomUserManager(BaseUserManager):
-    """
-    Custom user manager where email is the unique identifier
-    for authentication.
-    """
+
     def create_user(self, email, password=None, **extra_fields):
         """
         Creates and saves a User with the given email and password.
@@ -37,9 +34,6 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    """
-    custom user model for email based auth
-    """
     email = models.EmailField(unique=True,db_index=True)
     firstname = models.CharField(max_length=55)
     lastname = models.CharField(max_length=55)

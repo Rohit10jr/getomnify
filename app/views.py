@@ -53,7 +53,7 @@ class FitnessClassListView(generics.ListAPIView):
     def get_queryset(self):
         now = timezone.now()
         try:
-            queryset = FitnessClass.objects.filter(date_time__gte=now).order_by('date_time')
+            queryset = FitnessClass.objects.filter(date_time__gte=now, available_slots__gt=0).order_by('date_time')
             logger.info(f"Request received for list of classes, Found {queryset.count()} upcoming classes.")
             return queryset
         except Exception as e:
@@ -71,6 +71,14 @@ class BookingCreateView(APIView):
         if serializer.is_valid():
             fitness_class_obj = serializer.validated_data['fitness_class']
             logger.info(f"Booking request received for client '{client_email}' for class ID '{fitness_class_obj.pk}'.")
+            print("time now", timezone.now())
+            print("class time", fitness_class_obj.date_time)
+            if fitness_class_obj.date_time < timezone.now():
+                logger.warning(f"Booking failed for '{client_email}'. Class '{fitness_class_obj.name}' has already expired.")
+                return Response(
+                    {"detail": "This class has already expired and cannot be booked."},
+                    status=status.HTTP_400_BAD_REQUEST)
+                
 
             with transaction.atomic():
                 fitness_class = FitnessClass.objects.select_for_update().get(pk=fitness_class_obj.pk)
