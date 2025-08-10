@@ -80,3 +80,18 @@ class BookingListSerializer(serializers.ModelSerializer):
         model = Booking
         fields = ['id', 'fitness_class', 'client_name', 'client_email', 'booking_time']
         read_only_fields = ['booking_time']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        user_timezone = self.context['request'].query_params.get('timezone', 'Asia/Kolkata')
+
+        try:
+            target_tz = ZoneInfo(user_timezone)
+            utc_datetime = instance.booking_time
+            representation['date_time'] = utc_datetime.astimezone(target_tz).isoformat()
+        except KeyError:
+            ist_tz = ZoneInfo('Asia/Kolkata')
+            utc_datetime = instance.booking_time
+            representation['date_time'] = utc_datetime.astimezone(ist_tz).isoformat()
+            
+        return representation

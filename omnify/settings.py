@@ -157,7 +157,6 @@ SIMPLE_JWT = {
 # --- Logging config ---
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Define the log directory
 LOG_DIR = BASE_DIR / 'logs'
 LOG_DIR.mkdir(exist_ok=True)
 
