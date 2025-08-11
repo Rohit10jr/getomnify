@@ -124,6 +124,22 @@ This example shows how to request class times formatted for the America/New_York
     ```json
     [
     {
+        "id": 41,
+        "fitness_class": {
+        "id": 2,
+        "name": "Zumba",
+        "date_time": "2025-08-08T15:30:00+05:30",
+        "instructor": "rashmika",
+        "total_slots": 5,
+        "available_slots": 1
+        },
+        "client_name": "rohit",
+        "client_email": "rohit@mail.com",
+        "booking_time": "2025-08-10T15:57:29.232973Z",
+        "date_time": "2025-08-10T21:27:29.232973+05:30",
+        "booking_expired": true
+    },
+    {
         "id": 37,
         "fitness_class": {
         "id": 9,
@@ -136,7 +152,8 @@ This example shows how to request class times formatted for the America/New_York
         "client_name": "rohit",
         "client_email": "rohit@mail.com",
         "booking_time": "2025-08-08T09:46:28.957000Z",
-        "date_time": "2025-08-08T15:16:28.957000+05:30"
+        "date_time": "2025-08-08T15:16:28.957000+05:30",
+        "booking_expired": false
     },
     {
         "id": 34,
@@ -151,7 +168,8 @@ This example shows how to request class times formatted for the America/New_York
         "client_name": "rohit",
         "client_email": "rohit@mail.com",
         "booking_time": "2025-08-08T09:45:36.663000Z",
-        "date_time": "2025-08-08T15:15:36.663000+05:30"
+        "date_time": "2025-08-08T15:15:36.663000+05:30",
+        "booking_expired": false
     },
     {
         "id": 33,
@@ -166,7 +184,8 @@ This example shows how to request class times formatted for the America/New_York
         "client_name": "rohit",
         "client_email": "rohit@mail.com",
         "booking_time": "2025-08-08T08:30:56.576000Z",
-        "date_time": "2025-08-08T14:00:56.576000+05:30"
+        "date_time": "2025-08-08T14:00:56.576000+05:30",
+        "booking_expired": true
     }
     ]
     ```

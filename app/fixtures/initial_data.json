@@ -84,7 +84,7 @@
     "date_time": "2025-08-14T06:00:00Z",
     "instructor": "Messi",
     "total_slots": 10,
-    "available_slots": 0
+    "available_slots": 2
   }
 },
 {
@@ -95,7 +95,7 @@
     "date_time": "2025-08-11T12:00:00Z",
     "instructor": "Lin dan",
     "total_slots": 10,
-    "available_slots": 2
+    "available_slots": 0
   }
 },
 {
