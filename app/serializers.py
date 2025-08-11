@@ -4,10 +4,11 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from .models import FitnessClass, Booking
 from zoneinfo import ZoneInfo
+from django.utils import timezone
 
 User = get_user_model()
 
-
+# --- User Serializer ---
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
@@ -35,6 +36,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
     
 
+# --- Classes Serializers ---
 class FitnessClassSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -93,5 +95,8 @@ class BookingListSerializer(serializers.ModelSerializer):
             ist_tz = ZoneInfo('Asia/Kolkata')
             utc_datetime = instance.booking_time
             representation['date_time'] = utc_datetime.astimezone(ist_tz).isoformat()
-            
+
+        now = timezone.now()
+        representation['booking_expired'] = instance.fitness_class.date_time < now 
+
         return representation
